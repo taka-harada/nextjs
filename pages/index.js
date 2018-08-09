@@ -1,23 +1,22 @@
 import Layout from './components/MyLayout'
+import Link from 'next/link'
 import Head from 'next/head'
 
-const Index = (props) => (
+const PostLink = (props) => (
+  <li>
+    <Link as={`/blog/${props.id}`} href={`/post?title=${props.title}`}>
+      <a>{props.title}</a>
+    </Link>
+  </li>
+)
+
+export default () => (
   <Layout>
-    <Head>
-      <title key="title">タイトル</title>
-    </Head>
-    <div>
-    	<h1>Index Page.</h1>
-    	<p>This page was rendered on the server side: {props.isServer.toString()}</p>
-      <p>Hello Next.js</p>
-    </div>
+    <h1>My Blog</h1>
+    <ul>
+      <PostLink id="hello-nextjs" title="Hello Next.js"/>
+      <PostLink id="learn-nextjs" title="Learn Next.js is awesome"/>
+      <PostLink id="deploy-nextjs" title="Deploy apps with Zeit"/>
+    </ul>
   </Layout>
-);
-
-Index.getInitialProps = async function(){
-  return {
-    isServer: typeof window === 'undefined'
-  }
-};
-
-export default Index
+)

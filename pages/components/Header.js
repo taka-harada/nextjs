@@ -6,10 +6,10 @@ const linkStyle = {
 
 const Header = () => (
   <div>
-  	<Link route="home">
+  	<Link prefetch route="home">
   	  <a style={linkStyle}>Home</a>
   	</Link>
-  	<Link route="about">
+  	<Link prefetch route="about">
   	  <a style={linkStyle}>About</a>
   	</Link>
   </div>
