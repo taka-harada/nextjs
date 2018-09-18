@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "export": "next export",
-    "start": "NODE_ENV=production node server.js"
+    "start": "next start"
   },
   "dependencies": {
     "express": "^4.16.3",
@@ -16,6 +15,7 @@
     "next-routes": "^1.4.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-markdown": "^3.4.1"
+    "react-markdown": "^3.4.1",
+    "wpapi": "^1.1.2"
   }
 }

@@ -1,47 +1,48 @@
-import Layout from './components/MyLayout'
+import React from 'react'
 import Link from 'next/link'
-import fetch from 'isomorphic-unfetch'
-import Head from 'next/head'
+import fetch from "isomorphic-unfetch"
+import Layout from "../components/layout/index.js"
 
-function getPosts () {
-  return [
-    { id: 'hello-nextjs', title: 'Hello Next.js'},
-    { id: 'learn-nextjs', title: 'Learn Next.js'},
-    { id: 'deploy-nextjs', title: 'Deploy apps with ZEIT'},
-  ]
+class Index extends React.Component {
+  static async getInitialProps() {
+    const postsRes = await fetch('https://uniapp-api.hivelocity.co.jp/wp-json/wp/v2/blog?_embed');
+    //const postsRes = await fetch('https://api.basestation.jp/wp-json/wp/v2/blog?_embed');
+    const posts = await postsRes.json();
+    return { posts };
+  }
+
+  render() {
+    const posts = this.props.posts.map((post, index) => {
+      return (
+        <ul key={index}>
+          <li>
+            <Link
+              route="post"
+              as={`/blog/${post.id}`}
+              href={`/blog?id=${post.id}&apiRoute=post`}
+            >
+              <a>{post.title.rendered}</a>
+            </Link>
+          </li>
+        </ul>
+      );
+    });
+    return (
+      <Layout>
+        <h2>Blog List</h2>
+        {posts}
+      </Layout>
+    );
+  }
 }
 
-const PostLink = ({ post }) => (
-  <li>
-    <Link as={`/blog/${post.id}`} href={`/post?title=${post.title}`}>
-      <a>{post.title}</a>
-    </Link>
-    <style jsx>{`
-      li {
-        list-style: none;
-        margin: 5px 0;
-      }
+//const Index = () => (
+//  <div>
+//    <h1>Blog List</h1>
+//    <Link href="/blog">
+//      <a>Go to the recent posts</a>
+//    </Link>
+//  </div>
+//)
 
-      a {
-        text-decoration: none;
-        color: blue;
-        font-family: "Arial";
-      }
-
-      a:hover {
-        opacity: 0.6;
-      }
-    `}</style>
-  </li>
-)
-
-export default () => (
-  <Layout>
-    <h1>My Blog</h1>
-    <ul>
-      {getPosts().map((post) => (
-        <PostLink key={post.id} post={post} />
-      ))}
-    </ul>
-  </Layout>
-)
+export default Index

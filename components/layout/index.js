@@ -1,4 +1,4 @@
-import Header from './Header'
+import Header from '../header/index'
 
 const layoutStyle = {
   margin: 20,
